@@ -40,8 +40,8 @@ Options that can be passed to `pinoTransmitHttp({ ... })`:
 
 key | default | description
 --- | --- | ---
-throttle | `500` | Amount of milliseconds to throttle the transmission of the log messages. Note that trailing = true, leading = false is used. See lodash.throttle
-debounce | `null` | Amount of milliseconds to debounce the transmission of the log messages. If null then throttling is used
+throttle | `500` | Amount of milliseconds to throttle the transmission of the log messages. Note that `trailing = true, leading = false` is used. See [lodash.throttle](https://lodash.com/docs#throttle)
+debounce | `null` | Amount of milliseconds to debounce the transmission of the log messages. See [lodash.debounce](https://lodash.com/docs#debounce). If null then throttling is used
 url | `'/log'` | location where to send logs
 useSendBeacon | `true` | whether `navigator.sendBeacon` should be used on `unload`
 method | `'POST'` | method to be used by XHR and fetch calls
