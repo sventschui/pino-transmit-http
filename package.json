@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "tap --no-cov 'test/**/*.test.js'",
-    "lint": "standard"
+    "lint": "standard",
+    "ci": "standard | snazzy && tap --cov 'test/**/*.test.js'"
   },
   "precommit": [
     "lint",
@@ -29,6 +30,7 @@
   "devDependencies": {
     "pino": "^4.17.3",
     "pre-commit": "^1.2.2",
+    "snazzy": "^7.1.1",
     "standard": "^9.0.0",
     "tap": "^10.2.2"
   },

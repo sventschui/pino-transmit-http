@@ -73,7 +73,8 @@ function transmitHttp (inOpts) {
 
         fetchFn(opts.url, {
           method: opts.method,
-          headers: opts.headers
+          headers: opts.headers,
+          body: data
         })
           .then(function onFetchComplete (response) {
             if (!response.ok) {

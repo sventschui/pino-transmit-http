@@ -1,73 +1,7 @@
 'use strict'
 
-var test = require('tap').test
-
-function fakeEnv (t, opts) {
-  const xhrs = []
-  const unloadEventListeners = []
-  const sendBeaconCalls = []
-
-  global.window = {
-    addEventListener: function addEventListener (e, fn) {
-      if (e === 'unload') {
-        unloadEventListeners.push(fn)
-      } else {
-        t.fail(`Didn't expect to register an event listener for event of type ${e}`)
-      }
-    },
-    navigator: {
-      sendBeacon: opts.sendBeacon
-        ? function fakeSendBeacon (url, data) {
-          sendBeaconCalls.push({ url, data })
-          return true
-        }
-        : undefined
-    }
-  }
-
-  if (opts.xhr) {
-    global.XMLHttpRequest = function FakeXHR () {
-      const fakeXhr = {
-        open: null,
-        send: null,
-        requestHeaders: {}
-      }
-
-      xhrs.push(fakeXhr)
-
-      return {
-        open: function fakeOpen (method, url, async) {
-          if (fakeXhr.open) {
-            t.fail('Didn\'t expect send() to be called twice')
-          }
-
-          fakeXhr.open = { method, url, async }
-        },
-        send: function fakeSend (data) {
-          if (fakeXhr.send) {
-            t.fail('Didn\'t expect send() to be called twice')
-          }
-
-          fakeXhr.send = { data }
-        },
-        setRequestHeader: function fakeSetRequestHeader (name, value) {
-          fakeXhr.requestHeaders[name] = value
-        }
-      }
-    }
-  }
-
-  return {
-    xhrs,
-    unloadEventListeners,
-    sendBeaconCalls,
-    unload: function unload () {
-      unloadEventListeners.forEach(l => {
-        l()
-      })
-    }
-  }
-}
+const test = require('tap').test
+const fakeEnv = require('./fake-env')
 
 test('transmit works', function (t) {
   t.plan(15)
