@@ -1,0 +1,43 @@
+{
+  "name": "pino-sapling",
+  "version": "1.0.0",
+  "description": "A template repository for Pino modules",
+  "main": "index.js",
+  "scripts": {
+    "test": "tap --no-cov 'test/**/*.test.js'",
+    "lint": "standard"
+  },
+  "precommit": [
+    "lint",
+    "test"
+  ],
+  "bin": {
+    "myTransport": "bin.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/pinojs/pino-sapling.git"
+  },
+  "keywords": [
+    "pino"
+  ],
+  "author": "Your Name <your.name@here>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pinojs/pino-sapling/issues"
+  },
+  "homepage": "https://github.com/pinojs/pino-sapling#readme",
+  "devDependencies": {
+    "pino": "^4.17.3",
+    "pre-commit": "^1.2.2",
+    "standard": "^9.0.0",
+    "tap": "^10.2.2"
+  },
+  "dependencies": {
+    "lodash.debounce": "^4.0.8",
+    "lodash.throttle": "^4.1.1"
+  },
+  "peerDependencies": {
+    "pino": "^4.17.3"
+  }
+}
