@@ -3,7 +3,7 @@
 const test = require('tap').test
 const fakeEnv = require('./fake-env')
 
-test('transmit works', function (t) {
+test('basic', function (t) {
   t.plan(15)
 
   const pino = require('pino/browser')

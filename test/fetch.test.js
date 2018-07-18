@@ -3,7 +3,7 @@
 const test = require('tap').test
 const fakeEnv = require('./fake-env')
 
-test('fetch is used as fallback', function (t) {
+test('fetch', function (t) {
   t.plan(18)
 
   const pino = require('pino/browser')

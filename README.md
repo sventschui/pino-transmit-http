@@ -1,4 +1,4 @@
-# pino-transmit-http
+# pino-transmit-http [![Build Status](https://travis-ci.org/sventschui/pino-transmit-http.svg?branch=master)](https://travis-ci.org/sventschui/pino-transmit-http) [![Coverage Status](https://coveralls.io/repos/github/sventschui/pino-transmit-http/badge.svg?branch=master)](https://coveralls.io/github/sventschui/pino-transmit-http?branch=master)
 
 > ATTENTION: draft version, not yet released!
 
