@@ -47,7 +47,7 @@ test('fetch is used as fallback', function (t) {
     t.is(env.sendBeaconCalls[0].url, '/log', 'Expect sendBeacon call to use url /log')
     t.ok(
       env.sendBeaconCalls[0].data.match(
-        /\[{"ts":[0-9]{13},"messages":\["hello three"],"bindings":\[],"level":{"label":"warn","value":40}}]/,
+        /\[{"ts":[0-9]{13},"messages":\["hello three"],"bindings":\[],"level":{"label":"warn","value":40}}]/
       ),
       'Expect sendBeacon call to send correct data'
     )
