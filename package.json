@@ -1,7 +1,7 @@
 {
-  "name": "pino-sapling",
-  "version": "1.0.0",
-  "description": "A template repository for Pino modules",
+  "name": "pino-transmit-http",
+  "version": "1.0.0-alpha.0",
+  "description": "A pino browser transmit that send log statements over HTTP",
   "main": "index.js",
   "scripts": {
     "test": "tap --no-cov 'test/**/*.test.js'",
@@ -11,22 +11,21 @@
     "lint",
     "test"
   ],
-  "bin": {
-    "myTransport": "bin.js"
-  },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/pinojs/pino-sapling.git"
+    "url": "git+ssh://git@github.com/sventschui/pino-transmit-http.git"
   },
   "keywords": [
-    "pino"
+    "pino",
+    "transmit",
+    "http"
   ],
-  "author": "Your Name <your.name@here>",
+  "author": "Sven Tschui <sventschui@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/pinojs/pino-sapling/issues"
+    "url": "https://github.com/sventschui/pino-transmit-http/issues"
   },
-  "homepage": "https://github.com/pinojs/pino-sapling#readme",
+  "homepage": "https://github.com/sventschui/pino-transmit-http#readme",
   "devDependencies": {
     "pino": "^4.17.3",
     "pre-commit": "^1.2.2",
