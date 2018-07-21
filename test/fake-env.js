@@ -57,7 +57,7 @@ module.exports = function fakeEnv (t, opts) {
   if (opts.fetch) {
     global.fetch = function fakeFetch (url, options) {
       fetchCalls.push({ url, options })
-      return Promise.resolve({ status: 200 })
+      return Promise.resolve({ status: 200, ok: true })
     }
   }
 
