@@ -32,24 +32,36 @@ module.exports = function fakeEnv (t, opts) {
 
       xhrs.push(fakeXhr)
 
-      return {
-        open: function fakeOpen (method, url, async) {
-          if (fakeXhr.open) {
-            t.fail('Didn\'t expect send() to be called twice')
-          }
-
-          fakeXhr.open = { method, url, async }
-        },
-        send: function fakeSend (data) {
-          if (fakeXhr.send) {
-            t.fail('Didn\'t expect send() to be called twice')
-          }
-
-          fakeXhr.send = { data }
-        },
-        setRequestHeader: function fakeSetRequestHeader (name, value) {
-          fakeXhr.requestHeaders[name] = value
+      this.open = function fakeOpen (method, url, async) {
+        if (fakeXhr.open) {
+          t.fail('Didn\'t expect send() to be called twice')
         }
+
+        fakeXhr.open = { method, url, async }
+      }
+
+      this.send = function fakeSend (data) {
+        if (fakeXhr.send) {
+          t.fail('Didn\'t expect send() to be called twice')
+        }
+
+        if (this.onreadystatechange) {
+          this.readyState = 1
+          this.onreadystatechange()
+          this.readyState = 2
+          this.status = 200
+          this.onreadystatechange()
+          this.readyState = 3
+          this.onreadystatechange()
+          this.readyState = 4
+          this.onreadystatechange()
+        }
+
+        fakeXhr.send = { data }
+      }
+
+      this.setRequestHeader = function fakeSetRequestHeader (name, value) {
+        fakeXhr.requestHeaders[name] = value
       }
     }
   }
