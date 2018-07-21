@@ -3,12 +3,12 @@
 const test = require('tap').test
 const fakeEnv = require('./fake-env')
 
-test('basic', function (t) {
-  t.plan(15)
+test('XHR no sendBeacon', function (t) {
+  t.plan(17)
 
   const pino = require('pino/browser')
   const transmitFn = require('../')
-  const env = fakeEnv(t, { sendBeacon: true, xhr: true })
+  const env = fakeEnv(t, { sendBeacon: false, xhr: true })
 
   const transmit = transmitFn()
   t.is(env.unloadEventListeners.length, 1)
@@ -39,14 +39,16 @@ test('basic', function (t) {
 
     env.unload()
 
-    t.is(env.xhrs.length, 1, 'Expect no further XHR calls to be made immediately after unload')
-    t.is(env.sendBeaconCalls.length, 1, 'Expect sendBeacon call to be made immediately after unload')
-    t.is(env.sendBeaconCalls[0].url, '/log', 'Expect sendBeacon call to use url /log')
+    t.is(env.xhrs.length, 2, 'Expect one more XHR call to be made immediately after unload')
+    t.is(env.sendBeaconCalls.length, 0, 'Expect no sendBeacon calls to be made immediately after unload')
+    t.is(env.xhrs[1].open.method, 'POST', 'Expect XHR to be POST')
+    t.is(env.xhrs[1].open.url, '/log', 'Expect XHR to request URL /log')
+    t.is(env.xhrs[1].open.async, false, 'Expect XHR to be sync')
     t.ok(
-      env.sendBeaconCalls[0].data.match(
+      env.xhrs[1].send.data.match(
         /\[{"ts":[0-9]{13},"messages":\["hello three"],"bindings":\[],"level":{"label":"warn","value":40}}]/
       ),
-      'Expect sendBeacon call to send correct data'
+      'Expect XHR to send correct data'
     )
 
     t.end()

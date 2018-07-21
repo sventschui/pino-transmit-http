@@ -3,7 +3,7 @@
 const test = require('tap').test
 const fakeEnv = require('./fake-env')
 
-test('fetch-no-send-beacon', function (t) {
+test('fetch no sendBeacon', function (t) {
   t.plan(19)
 
   const pino = require('pino/browser')
