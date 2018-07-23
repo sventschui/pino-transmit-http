@@ -1,3 +1,5 @@
+'use strict'
+
 const createMockFetch = require('./create-mock-fetch')
 const mockConsole = require('./mock-console')
 
