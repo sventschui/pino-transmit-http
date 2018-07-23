@@ -67,6 +67,10 @@ module.exports = function fakeEnv (t, opts) {
       }
 
       this.setRequestHeader = function fakeSetRequestHeader (name, value) {
+        if (fakeXhr.requestHeaders[name]) {
+          t.fail(`Didn't expect the ${name} header to be set twice`)
+        }
+
         fakeXhr.requestHeaders[name] = value
       }
     }
