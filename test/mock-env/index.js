@@ -1,25 +1,29 @@
+const createMockFetch = require('./create-mock-fetch')
+const mockConsole = require('./mock-console')
+
 module.exports = function fakeEnv (t, opts) {
   const xhrs = []
   const unloadEventListeners = []
   const sendBeaconCalls = []
-  const fetchCalls = []
+  let fetchCalls = []
 
-  global.window = {
-    addEventListener: function addEventListener (e, fn) {
-      if (e === 'unload') {
-        unloadEventListeners.push(fn)
-      } else {
-        t.fail(`Didn't expect to register an event listener for event of type ${e}`)
-      }
-    },
-    navigator: {
-      sendBeacon: opts.sendBeacon
-        ? function fakeSendBeacon (url, data) {
-          sendBeaconCalls.push({ url, data })
-          return true
-        }
-        : undefined
+  global.window = global
+
+  global.addEventListener = function addEventListener (e, fn) {
+    if (e === 'unload') {
+      unloadEventListeners.push(fn)
+    } else {
+      t.fail(`Didn't expect to register an event listener for event of type ${e}`)
     }
+  }
+
+  global.navigator = {
+    sendBeacon: opts.sendBeacon
+      ? function fakeSendBeacon (url, data) {
+        sendBeaconCalls.push({ url, data })
+        return true
+      }
+      : undefined
   }
 
   if (opts.xhr) {
@@ -64,20 +68,26 @@ module.exports = function fakeEnv (t, opts) {
         fakeXhr.requestHeaders[name] = value
       }
     }
+  } else {
+    delete global.XMLHttpRequest
   }
 
   if (opts.fetch) {
-    global.fetch = function fakeFetch (url, options) {
-      fetchCalls.push({ url, options })
-      return Promise.resolve({ status: 200, ok: true })
-    }
+    const mockFetch = createMockFetch()
+    global.fetch = mockFetch.fetch
+    fetchCalls = mockFetch.fetchCalls
+  } else {
+    delete global.fetch
   }
+
+  const mockedConsole = mockConsole(t)
 
   return {
     xhrs,
     unloadEventListeners,
     sendBeaconCalls,
     fetchCalls,
+    console: mockedConsole,
     unload: function unload () {
       unloadEventListeners.forEach(l => {
         l()

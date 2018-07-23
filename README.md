@@ -43,7 +43,8 @@ key | default | description
 throttle | `500` | Amount of milliseconds to throttle the transmission of the log messages. Note that `trailing = true, leading = false` is used. See [lodash.throttle](https://lodash.com/docs#throttle)
 debounce | `null` | Amount of milliseconds to debounce the transmission of the log messages. See [lodash.debounce](https://lodash.com/docs#debounce). If null then throttling is used
 url | `'/log'` | location where to send logs
-useSendBeacon | `true` | whether `navigator.sendBeacon` should be used on `unload`
-method | `'POST'` | method to be used by XHR and fetch calls
-headers | `{ 'content-type': 'application/json;charset=UTF-8' }` | headers added to XHR and fetch calls. Default includes content-type header
+useSendBeacon | `true` | whether `navigator.sendBeacon` should be used on `unload`. Note that sendBeacon has various restriction. It operations on method `POST` only and can not send custom HTTP headers. `content-type` is always `text/plain`.
+forceSendBeacon | `false` | The transmit will fallback to XHR or fetch when a HTTP method other than `POST` or custom http headers are used since this is not supported by `sendBeacon`. With `forceSendBeacon` you can disable the fallback and use `sendBeacon` anyway. Note that in this case the log calls made using `sendBeacon` are issued as HTTP `POST` and without any custom headers.
+method | `'POST'` | method to be used by XHR and fetch calls. Note that when you pass in a method other than `POST`, `sendBeacon` will not be used unless you pass `forceSendBeacon`.
+headers | `{ 'content-type': 'application/json;charset=UTF-8' }` for XHR and fetch calls. Not supported for `sendBeacon` calls | headers added to XHR and fetch calls. Note that when you pass in custom headers `sendBeacon` will not be used unless you pass `forceSendBeacon`.
 fetch | `null` | fetch instance to be used instead of the global fetch variable

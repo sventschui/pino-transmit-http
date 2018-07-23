@@ -1,14 +1,14 @@
 'use strict'
 
 const test = require('tap').test
-const fakeEnv = require('./fake-env')
+const mockEnv = require('./mock-env')
 
 test('debounce', function (t) {
-  t.plan(22)
+  t.plan(20)
 
   const pino = require('pino/browser')
   const transmitFn = require('../')
-  const env = fakeEnv(t, { sendBeacon: true, xhr: true })
+  const env = mockEnv(t, { sendBeacon: true, xhr: true })
 
   const transmit = transmitFn({ debounce: 500 })
   t.is(env.unloadEventListeners.length, 1)
@@ -34,9 +34,11 @@ test('debounce', function (t) {
       setTimeout(() => {
         t.is(env.sendBeaconCalls.length, 0, 'Expect no sendBeacon calls to be made 600ms after second log statements')
         t.is(env.xhrs.length, 1, 'Expect one XHR call to be made 600ms after second log statement')
-        t.is(env.xhrs[0].open.method, 'POST', 'Expect XHR to be POST')
-        t.is(env.xhrs[0].open.url, '/log', 'Expect XHR to request URL /log')
-        t.is(env.xhrs[0].open.async, true, 'Expect XHR to be async')
+        t.same(env.xhrs[0].open, {
+          method: 'POST',
+          url: '/log',
+          async: true
+        }, 'Expect XHR to open correctly')
         t.ok(
           env.xhrs[0].send.data.match(
             /\[{"ts":[0-9]{13},"messages":\["hello one"],"bindings":\[],"level":{"label":"info","value":30}},{"ts":[0-9]{13},"messages":\["hello two"],"bindings":\[],"level":{"label":"error","value":50}}]/
