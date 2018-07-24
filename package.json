@@ -1,6 +1,6 @@
 {
   "name": "pino-transmit-http",
-  "version": "1.0.0-alpha.3",
+  "version": "1.0.0-alpha.4",
   "description": "A pino browser transmit that send log statements over HTTP",
   "main": "index.js",
   "scripts": {
