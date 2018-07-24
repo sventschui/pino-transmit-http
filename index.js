@@ -20,16 +20,23 @@ function transmitHttp (inOpts) {
   let isUnloading = false
 
   function rawSend () {
-    // short circuit if the method is called without any logs collected
-    if (collection.length === 0) {
-      return
+    try {
+      // short circuit if the method is called without any logs collected
+      if (collection.length === 0) {
+        return
+      }
+
+      // convert collected logs to string and clear the collector array
+      let data = JSON.stringify(collection)
+      collection = []
+
+      return httpSend(data, isUnloading, opts)
+        .catch(function catchFn (e) {
+          console.error(e)
+        })
+    } catch (e) {
+      console.error(e)
     }
-
-    // convert collected logs to string and clear the collector array
-    let data = JSON.stringify(collection)
-    collection = []
-
-    httpSend(data, isUnloading, opts)
   }
 
   let send
@@ -39,7 +46,7 @@ function transmitHttp (inOpts) {
     send = throttle(rawSend, opts.throttle, { trailing: true, leading: false })
   } else {
     console.warn(
-      'Either throttle or debounce option must be passed to pino-transmit-http. Falling back to throttle by %dms',
+      'pino-transmit-http: Either throttle or debounce option must be passed to pino-transmit-http. Falling back to throttle by %dms',
       defaultOptions.throttle
     )
     send = throttle(rawSend, defaultOptions.throttle, { trailing: true, leading: false })
@@ -60,8 +67,12 @@ function transmitHttp (inOpts) {
   return {
     level: opts.level,
     send: function (level, logEvent) {
-      collection.push(logEvent)
-      send()
+      try {
+        collection.push(logEvent)
+        send()
+      } catch (e) {
+        console.error('pino-transmit-http: Failed to transmit logs')
+      }
     }
   }
 };

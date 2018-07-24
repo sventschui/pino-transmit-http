@@ -15,7 +15,7 @@ test('no throttle no debounce', function (t) {
   t.same(env.console.calls[0], {
     level: 'warn',
     arguments: [
-      'Either throttle or debounce option must be passed to pino-transmit-http. Falling back to throttle by %dms',
+      'pino-transmit-http: Either throttle or debounce option must be passed to pino-transmit-http. Falling back to throttle by %dms',
       500
     ]
   }, 'Expect warn about neither throttle nor debounce')

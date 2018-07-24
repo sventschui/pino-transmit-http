@@ -62,7 +62,7 @@ test('useSendBeacon - invalid method', function (t) {
   t.same(env.console.calls[0], {
     level: 'warn',
     arguments: [
-      'Tried to use method %s when using sendBeacon. This is not supported!',
+      'pino-transmit-http: Tried to use method %s when using sendBeacon. This is not supported!',
       'PUT'
     ]
   }, 'expected one console calls')
@@ -80,7 +80,7 @@ test('useSendBeacon - invalid headers', function (t) {
   t.same(env.console.calls[0], {
     level: 'warn',
     arguments: [
-      'Tried to use custom headers when using sendBeacon. This is not supported!'
+      'pino-transmit-http: Tried to use custom headers when using sendBeacon. This is not supported!'
     ]
   }, 'expected one console calls')
 

@@ -85,7 +85,7 @@ test('xhr unloading sendBeacon incompatible', function (t) {
   t.is(env.console.calls.length, 1, 'Expected two console call')
   t.same(env.console.calls[0], {
     level: 'warn',
-    arguments: ['Tried to use method %s when using sendBeacon. This is not supported!', 'PUT']
+    arguments: ['pino-transmit-http: Tried to use method %s when using sendBeacon. This is not supported!', 'PUT']
   }, 'Expected warning about method')
 
   t.is(env.xhrs.length, 1, 'Expect one XHR call to be made')

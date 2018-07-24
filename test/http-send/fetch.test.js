@@ -107,11 +107,11 @@ test('fetch unloading sendBeacon incompatible', function (t) {
   t.is(env.console.calls.length, 2, 'Expected two console call')
   t.same(env.console.calls[0], {
     level: 'warn',
-    arguments: ['Tried to use method %s when using sendBeacon. This is not supported!', 'PUT']
+    arguments: ['pino-transmit-http: Tried to use method %s when using sendBeacon. This is not supported!', 'PUT']
   }, 'Expected warning about method')
   t.same(env.console.calls[1], {
     level: 'warn',
-    arguments: ['Tried to send logs during page unloading when XMLHttpRequest is not available. The log entries will most likely never arrive!']
+    arguments: ['pino-transmit-http: Tried to send logs during page unloading when XMLHttpRequest is not available. The log entries will most likely never arrive!']
   }, 'Expected warning about no XHR and sendBeacon available during unloading')
 
   t.is(env.xhrs.length, 0, 'Expect no XHR calls to be made')
@@ -169,7 +169,7 @@ test('fetch unloading no sendBeacon', function (t) {
   t.is(env.console.calls.length, 1, 'Expected one console call')
   t.same(env.console.calls[0], {
     level: 'warn',
-    arguments: ['Tried to send logs during page unloading when XMLHttpRequest is not available. The log entries will most likely never arrive!']
+    arguments: ['pino-transmit-http: Tried to send logs during page unloading when XMLHttpRequest is not available. The log entries will most likely never arrive!']
   }, 'Expected warning about method')
 
   t.end()
