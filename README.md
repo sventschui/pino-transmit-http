@@ -18,7 +18,7 @@ const pinoTransmitHttp = require('pino-transmit-http');
 
 const logger = pino({
   browser: {
-    trasmit: pinoTransmitHttp()
+    transmit: pinoTransmitHttp()
   }
 })
 
